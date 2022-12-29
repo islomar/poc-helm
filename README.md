@@ -44,7 +44,7 @@
   - `helm repo list`
   - `helm repo remove`
   - `helm repo udate`: Because chart repositories change frequently, at any point you can make sure your Helm client is up to date
-- `helm install <chart_name_to_install> --generate-name` or `helm install <release_name> <chart_name_to_install>`
+- `helm install <chart_name_to_install> --generate-name` or `helm install <release_name> <repo/chart_name_to_install>`
   - Helm does not wait until all of the resources are running before it exits. Many charts require Docker images that are over 600M in size, and may take a long time to install into the cluster.
 - `helm status <release_name>`: to keep track of a release's state
 - To see what options are configurable on a chart, use `helm show values`
@@ -61,6 +61,7 @@
   - `--timeout`
   - `--wait`
 - `helm uninstall <release_name>`: uninstall a release from the cluster
+- `helm delete <release_name> -n <namespace>`
 - You can create your own Charts: https://helm.sh/docs/topics/charts/
 
 ## [Best practices](https://helm.sh/docs/chart_best_practices)
@@ -99,3 +100,5 @@
     - `kubectl logs <pod_name> -n metrics`
     - `kubectl port-forward svc/kube-state-metrics 8080:8080 -n metrics`: forward service to a local port that I can access in order to check the metrics
       - http://localhost:8080
+    - `helm upgrade kube-state-metrics bitnamic/kube-state-metrics --version 0.4.0 -n metrics`: to use a specific Chart version
+    - `kubectl delete ns metrics`

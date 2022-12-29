@@ -1,6 +1,7 @@
 # poc-helm
 - Playground for learning about **Helm**: the package manager for k8s
 - https://helm.sh/
+- https://github.com/helm/helm
 - Helm = timón
 - Related resources:
   - https://github.com/islomar/my-notes/tree/master/kubernetes
@@ -50,6 +51,7 @@
   - You can then override any of these settings in a YAML formatted file (e.g. `values.yaml`), and then pass that file during installation.
   - helm install -f values.yaml bitnami/wordpress --generate-name`
 - `helm show chart <chart_name>`
+- `helm show helm`
 - `helm upgrade -f values.yaml <release_name> <chart_name_to_upgrade>`: An upgrade takes an existing release and upgrades it according to the information you provide
 - `helm get values <release_name>`: The helm get command is a useful tool for looking at a release in the cluster.
 - `helm rollback <release_version> <revision>`: if something does not go as planned during a release, it is easy to roll back to a previous release
@@ -79,8 +81,21 @@
 - Helm Chart repositories: https://artifacthub.io/packages/search?kind=0
 - [Terraform Helm provider](https://registry.terraform.io/providers/hashicorp/helm/latest/docs)
   - Tutorial: https://developer.hashicorp.com/terraform/tutorials/kubernetes/helm-provider?in=terraform%2Fkubernetes
-- [helm-diff](https://github.com/databus23/helm-diff):This is a Helm plugin giving you a preview of what a `helm upgrade would change. It basically generates a diff between the latest deployed version of a release and a helm upgrade --debug --dry-run`.
 - [Helm plugins](https://helm.sh/docs/topics/plugins/): 
   - A Helm plugin is a tool that can be accessed through the helm CLI, but which is not part of the built-in Helm codebase.
   - They provide a way to extend the core feature set of Helm, but without requiring every new feature to be written in Go and added to the core tool.
   - Helm plugins live in $HELM_PLUGINS
+  - [helm-diff](https://github.com/databus23/helm-diff):This is a Helm plugin giving you a preview of what a `helm upgrade would change. It basically generates a diff between the latest deployed version of a release and a helm upgrade --debug --dry-run`.
+  - [kube-state-metrics (KSM)](https://github.com/kubernetes/kube-state-metrics) is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.
+    - https://artifacthub.io/packages/helm/bitnami/kube-state-metrics
+    - `helm repo add bitnami https://charts.bitnami.com/bitnami`
+    - `helm repo update`
+    - `helm repo list`
+    - `kubectl create ns metrics`
+    - `kubectl get ns`
+    - `helm install kube-state-metrics bitnami/kube-state-metrics -n metrics`
+    `helm ls -n metrics`
+    - `kubectl get all -n metrics`: to see all the k8s resources created by the Helm Chart
+    - `kubectl logs <pod_name> -n metrics`
+    - `kubectl port-forward svc/kube-state-metrics 8080:8080 -n metrics`: forward service to a local port that I can access in order to check the metrics
+      - http://localhost:8080

@@ -2,6 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+env: production
+
+staging:
+  sample-key: sample-12345
+
 replicaCount: 1
 
 image:

@@ -102,4 +102,6 @@
       - http://localhost:8080
     - `helm upgrade kube-state-metrics bitnamic/kube-state-metrics --version 0.4.0 -n metrics`: to use a specific Chart version
     - `kubectl delete ns metrics`
-    - `helm history first-chart .`
+    - `helm history first-chart`
+    - `helm rollback first-chart`
+      - `helm rollback first-chart <revision_number>`

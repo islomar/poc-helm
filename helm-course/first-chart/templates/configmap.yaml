@@ -4,3 +4,4 @@ metadata:
   name: first-chart-configmap
 data:
   port: "8080"
+  allowTesting: "true"
